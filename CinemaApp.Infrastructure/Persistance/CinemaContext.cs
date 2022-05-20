@@ -172,6 +172,12 @@ namespace CinemaApp.Infrastructure.Persistance
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<Sala>().HasData(
+                new Sala { IdSala = 1, Activa = true, Capacidad = 20, EsDinamix = false, Nomenclatura = "S1" },
+                new Sala { IdSala = 2, Activa = true, Capacidad = 30, EsDinamix = true, Nomenclatura = "S2" },
+                new Sala { IdSala = 3, Activa = true, Capacidad = 25, EsDinamix = false, Nomenclatura = "S3" }
+            );
+
             OnModelCreatingPartial(modelBuilder);
         }
 
