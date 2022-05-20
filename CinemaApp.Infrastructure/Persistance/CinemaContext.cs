@@ -7,7 +7,7 @@ using CinemaApp.Domain.Entities;
 // If you have enabled NRTs for your project, then un-comment the following line:
 // #nullable disable
 
-namespace CinemaApp.Infrastructure.Persistence
+namespace CinemaApp.Infrastructure.Persistance
 {
     public partial class CinemaContext : DbContext
     {
