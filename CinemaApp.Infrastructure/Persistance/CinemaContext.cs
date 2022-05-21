@@ -27,15 +27,6 @@ namespace CinemaApp.Infrastructure.Persistance
         public virtual DbSet<Pelicula> Pelicula { get; set; }
         public virtual DbSet<Sala> Sala { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=COL-LT-210601I;Database=Cinema;User Id=cesde;Password=abc123..");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Cliente>(entity =>
@@ -171,6 +162,13 @@ namespace CinemaApp.Infrastructure.Persistance
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
+
+            modelBuilder.Entity<Sala>().HasData(
+                new Sala { IdSala = 1, Nomenclatura = "S1", Capacidad = 20, Activa = true, EsDinamix= false },
+                new Sala { IdSala = 2, Nomenclatura = "S2", Capacidad = 30, Activa = true, EsDinamix = true },
+                new Sala { IdSala = 3, Nomenclatura = "S3", Capacidad = 25, Activa = true, EsDinamix = true },
+                new Sala { IdSala = 4, Nomenclatura = "S4", Capacidad = 40, Activa = true, EsDinamix = false }
+                );
 
             OnModelCreatingPartial(modelBuilder);
         }
