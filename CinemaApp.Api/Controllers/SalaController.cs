@@ -1,4 +1,5 @@
-﻿using CinemaApp.Infrastructure.Persistance;
+﻿using CinemaApp.Domain.Interfaces;
+using CinemaApp.Infrastructure.Persistance;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,16 +13,16 @@ namespace CinemaApp.Api.Controllers
     [ApiController]
     public class SalaController : ControllerBase
     {
-        private readonly CinemaContext _context;
-        public SalaController(CinemaContext context)
+        private readonly ISalaRepository _repository;
+        public SalaController(ISalaRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_context.Sala.ToList());
+            return Ok(_repository.GetSalas());
         }
 
     }
