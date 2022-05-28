@@ -33,7 +33,7 @@ namespace CinemaApp.Api.Controllers
             var sala = new Sala
             {
                 Activa = request.Activa,
-                Capacidad = request.Capacidad,
+                Capacidad = (int)request.Capacidad,
                 EsDinamix = request.EsDinamix,
                 Nomenclatura = request.Nomenclatura,
             };
