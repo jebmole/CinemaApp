@@ -8,5 +8,9 @@ namespace CinemaApp.Domain.Interfaces
     public interface ISalaRepository
     {
         IEnumerable<Sala> GetSalas();
+
+        void InsertSala(Sala sala);
+
+        void UpdateSala(Sala sala);
     }
 }

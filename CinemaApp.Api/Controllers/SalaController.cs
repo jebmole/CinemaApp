@@ -1,4 +1,6 @@
-﻿using CinemaApp.Domain.Interfaces;
+﻿using CinemaApp.Application.Requests;
+using CinemaApp.Domain.Entities;
+using CinemaApp.Domain.Interfaces;
 using CinemaApp.Infrastructure.Persistance;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,5 +27,35 @@ namespace CinemaApp.Api.Controllers
             return Ok(_repository.GetSalas());
         }
 
+        [HttpPost]
+        public IActionResult Post(CreateSalaRequest request)
+        {
+            var sala = new Sala
+            {
+                Activa = request.Activa,
+                Capacidad = request.Capacidad,
+                EsDinamix = request.EsDinamix,
+                Nomenclatura = request.Nomenclatura,
+            };
+
+            _repository.InsertSala(sala);
+            return Ok();
+        }
+
+        [HttpPut]
+        public IActionResult Put(UpdateSalaRequest request)
+        {
+            var sala = new Sala
+            {
+                IdSala = request.IdSala,
+                Activa = request.Activa,
+                Capacidad = request.Capacidad,
+                EsDinamix = request.EsDinamix,
+                Nomenclatura = request.Nomenclatura,
+            };
+
+            _repository.UpdateSala(sala);
+            return Ok();
+        }
     }
 }
