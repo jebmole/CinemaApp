@@ -1,6 +1,8 @@
+using CinemaApp.Application;
 using CinemaApp.Domain.Interfaces;
 using CinemaApp.Infrastructure.Persistance;
 using CinemaApp.Infrastructure.Repositories;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,13 +31,18 @@ namespace CinemaApp.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation();
+
+            //Se agregan las dependencias de la capa Application
+            services.AddApplicationServices();
 
             //Se enlaza la cadena de conexion con el BD Context
             services.AddDbContext<CinemaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Cinema")));
 
             //Registrar las dependencias
             services.AddTransient<ISalaRepository, SalaRepository>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
