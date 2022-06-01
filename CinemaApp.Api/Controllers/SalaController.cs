@@ -1,4 +1,5 @@
-﻿using CinemaApp.Application.Requests;
+﻿using AutoMapper;
+using CinemaApp.Application.Requests;
 using CinemaApp.Domain.Entities;
 using CinemaApp.Domain.Interfaces;
 using CinemaApp.Infrastructure.Persistance;
@@ -16,9 +17,12 @@ namespace CinemaApp.Api.Controllers
     public class SalaController : ControllerBase
     {
         private readonly ISalaRepository _repository;
-        public SalaController(ISalaRepository repository)
+        private readonly IMapper _mapper;
+
+        public SalaController(ISalaRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -30,14 +34,7 @@ namespace CinemaApp.Api.Controllers
         [HttpPost]
         public IActionResult Post(CreateSalaRequest request)
         {
-            var sala = new Sala
-            {
-                Activa = request.Activa,
-                Capacidad = (int)request.Capacidad,
-                EsDinamix = request.EsDinamix,
-                Nomenclatura = request.Nomenclatura,
-            };
-
+            var sala = _mapper.Map<Sala>(request);
             _repository.InsertSala(sala);
             return Ok();
         }
@@ -45,15 +42,7 @@ namespace CinemaApp.Api.Controllers
         [HttpPut]
         public IActionResult Put(UpdateSalaRequest request)
         {
-            var sala = new Sala
-            {
-                IdSala = request.IdSala,
-                Activa = request.Activa,
-                Capacidad = request.Capacidad,
-                EsDinamix = request.EsDinamix,
-                Nomenclatura = request.Nomenclatura,
-            };
-
+            var sala = _mapper.Map<Sala>(request);
             _repository.UpdateSala(sala);
             return Ok();
         }
