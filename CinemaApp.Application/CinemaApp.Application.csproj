@@ -12,4 +12,8 @@
     <Folder Include="Responses\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.0.2" />
+  </ItemGroup>
+
 </Project>
