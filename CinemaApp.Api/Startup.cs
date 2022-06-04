@@ -1,5 +1,6 @@
 using CinemaApp.Application;
 using CinemaApp.Domain.Interfaces;
+using CinemaApp.Infrastructure.Filters;
 using CinemaApp.Infrastructure.Persistance;
 using CinemaApp.Infrastructure.Repositories;
 using FluentValidation.AspNetCore;
@@ -32,7 +33,11 @@ namespace CinemaApp.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddControllers()
+                .AddControllers(options =>
+                {
+                    //Se registra el manejo de excepciones de forma global
+                    options.Filters.Add<GlobalExceptionFilter>();
+                })
                 .AddFluentValidation(); //Se agrega Fluent Validation como validador
 
             //Se registran las dependencias del proyecto Application
