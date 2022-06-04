@@ -7,10 +7,13 @@ namespace CinemaApp.Domain.Interfaces
 {
     public interface ISalaRepository
     {
+        Sala GetSalaById(int idSala);
         IEnumerable<Sala> GetSalas();
 
         void InsertSala(Sala sala);
 
         void UpdateSala(Sala sala);
+
+        void DeleteSala(int idSala);
     }
 }

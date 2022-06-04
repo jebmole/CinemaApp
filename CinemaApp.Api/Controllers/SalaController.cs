@@ -2,13 +2,7 @@
 using CinemaApp.Application.Requests;
 using CinemaApp.Domain.Entities;
 using CinemaApp.Domain.Interfaces;
-using CinemaApp.Infrastructure.Persistance;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CinemaApp.Api.Controllers
 {
@@ -31,6 +25,12 @@ namespace CinemaApp.Api.Controllers
             return Ok(_repository.GetSalas());
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get([FromRoute] GetSalaByIdRequest request)
+        {
+            return Ok(_repository.GetSalaById(request.Id));
+        }
+
         [HttpPost]
         public IActionResult Post(CreateSalaRequest request)
         {
@@ -44,6 +44,13 @@ namespace CinemaApp.Api.Controllers
         {
             var sala = _mapper.Map<Sala>(request);
             _repository.UpdateSala(sala);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromRoute] DeleteSalaRequest request)
+        {
+            _repository.DeleteSala(request.Id);
             return Ok();
         }
     }
