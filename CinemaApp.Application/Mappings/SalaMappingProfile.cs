@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CinemaApp.Application.Requests;
+using CinemaApp.Application.Responses;
 using CinemaApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace CinemaApp.Application.Mappings
 
             CreateMap<UpdateSalaRequest, Sala>();
             CreateMap<Sala, UpdateSalaRequest>();
+
+            CreateMap<Sala, SalaResponse>();
         }
     }
 }

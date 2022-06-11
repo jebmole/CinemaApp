@@ -1,4 +1,6 @@
 using CinemaApp.Application;
+using CinemaApp.Application.Interfaces;
+using CinemaApp.Application.Services;
 using CinemaApp.Domain.Interfaces;
 using CinemaApp.Infrastructure.Filters;
 using CinemaApp.Infrastructure.Persistance;
@@ -46,8 +48,11 @@ namespace CinemaApp.Api
             //Se enlaza la cadena de conexion con el BD Context
             services.AddDbContext<CinemaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Cinema")));
 
-            //Registrar las dependencias
+            //Registrar las dependencias de los repositorios
             services.AddTransient<ISalaRepository, SalaRepository>();
+
+            //Registrar las dependencias de los servicios
+            services.AddTransient<ISalaService, SalaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

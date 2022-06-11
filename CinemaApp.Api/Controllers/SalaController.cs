@@ -1,7 +1,5 @@
-﻿using AutoMapper;
+﻿using CinemaApp.Application.Interfaces;
 using CinemaApp.Application.Requests;
-using CinemaApp.Domain.Entities;
-using CinemaApp.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaApp.Api.Controllers
@@ -10,47 +8,43 @@ namespace CinemaApp.Api.Controllers
     [ApiController]
     public class SalaController : ControllerBase
     {
-        private readonly ISalaRepository _repository;
-        private readonly IMapper _mapper;
+        private readonly ISalaService _service;
 
-        public SalaController(ISalaRepository repository, IMapper mapper)
+        public SalaController(ISalaService service)
         {
-            _repository = repository;
-            _mapper = mapper;
+            _service = service;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_repository.GetSalas());
+            return Ok(_service.GetSalas());
         }
 
         [HttpGet("{id}")]
         public IActionResult Get([FromRoute] GetSalaByIdRequest request)
         {
-            return Ok(_repository.GetSalaById(request.Id));
+            return Ok(_service.GetSalaById(request.Id));
         }
 
         [HttpPost]
         public IActionResult Post(CreateSalaRequest request)
         {
-            var sala = _mapper.Map<Sala>(request);
-            _repository.InsertSala(sala);
+            _service.InsertSala(request);
             return Ok();
         }
 
         [HttpPut]
         public IActionResult Put(UpdateSalaRequest request)
         {
-            var sala = _mapper.Map<Sala>(request);
-            _repository.UpdateSala(sala);
+            _service.UpdateSala(request);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete([FromRoute] DeleteSalaRequest request)
         {
-            _repository.DeleteSala(request.Id);
+            _service.DeleteSala(request.Id);
             return Ok();
         }
     }
