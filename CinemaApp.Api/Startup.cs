@@ -3,6 +3,7 @@ using CinemaApp.Application.Interfaces;
 using CinemaApp.Application.Services;
 using CinemaApp.Domain.Interfaces;
 using CinemaApp.Infrastructure.Filters;
+using CinemaApp.Infrastructure.IntegrationServices;
 using CinemaApp.Infrastructure.Persistance;
 using CinemaApp.Infrastructure.Repositories;
 using FluentValidation.AspNetCore;
@@ -53,6 +54,10 @@ namespace CinemaApp.Api
 
             //Registrar las dependencias de los servicios
             services.AddTransient<ISalaService, SalaService>();
+            services.AddTransient<IPeliculaService, PeliculaService>();
+
+            //Registrar las dependencias de las integraciones
+            services.AddTransient<IPeliculaIntegracion, TmdbIntegrationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
