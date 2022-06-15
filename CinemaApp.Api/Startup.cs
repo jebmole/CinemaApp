@@ -7,6 +7,7 @@ using CinemaApp.Infrastructure.IntegrationServices;
 using CinemaApp.Infrastructure.Persistance;
 using CinemaApp.Infrastructure.Repositories;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,9 +17,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CinemaApp.Api
@@ -58,6 +61,26 @@ namespace CinemaApp.Api
 
             //Registrar las dependencias de las integraciones
             services.AddTransient<IPeliculaIntegracion, TmdbIntegrationService>();
+
+            //Registrar la autenticación con JWT
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                //Se definen los parametros de validación del token
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "https://localhost:44357",
+                    ValidAudience = "https://localhost:44357",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("asdfawdfsdfqwerwefcwaefewtwassdas"))
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +95,8 @@ namespace CinemaApp.Api
 
             app.UseRouting();
 
+            //Se registra la autenticación
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

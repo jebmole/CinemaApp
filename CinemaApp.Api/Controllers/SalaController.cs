@@ -1,11 +1,13 @@
 ﻿using CinemaApp.Application.Interfaces;
 using CinemaApp.Application.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SalaController : ControllerBase
     {
         private readonly ISalaService _service;
