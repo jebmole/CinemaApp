@@ -7,7 +7,7 @@ namespace CinemaApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PeliculaController : ControllerBase
     {
         private readonly IPeliculaService _peliculaService;

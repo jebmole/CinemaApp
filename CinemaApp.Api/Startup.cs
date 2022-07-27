@@ -30,6 +30,7 @@ namespace CinemaApp.Api
 {
     public class Startup
     {
+        private readonly string cinemaUIPolicy = "UIPolicy";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -47,6 +48,14 @@ namespace CinemaApp.Api
                     options.Filters.Add<GlobalExceptionFilter>();
                 })
                 .AddFluentValidation(); //Se agrega Fluent Validation como validador
+
+            //Se habilitan los CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy(cinemaUIPolicy,
+                    policy => policy.WithOrigins("*").AllowAnyMethod());
+
+            });
 
             //Se registran las dependencias del proyecto Application
             services.AddApplicationServices();
@@ -113,6 +122,9 @@ namespace CinemaApp.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //Se utiliza el CORS
+            app.UseCors(cinemaUIPolicy);
 
             //Se registra la autenticación
             app.UseAuthentication();
