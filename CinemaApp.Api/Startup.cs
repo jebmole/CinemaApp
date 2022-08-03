@@ -53,7 +53,9 @@ namespace CinemaApp.Api
             services.AddCors(options =>
             {
                 options.AddPolicy(cinemaUIPolicy,
-                    policy => policy.WithOrigins("*").AllowAnyMethod());
+                    policy => policy.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin());
 
             });
 
